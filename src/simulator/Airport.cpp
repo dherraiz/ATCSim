@@ -63,6 +63,10 @@ Airport::Airport() {
 	acum_ =  0;
 
   any_landing_ = false;
+
+
+	paso_=1;
+	tiempo_ultimo_=0;
 }
 
 Airport::~Airport() {
@@ -205,6 +209,7 @@ Airport::step()
 	if(acum_>INC_DIFF)
 	{
 		max_flights += INC_PEN;
+		periodos_++;
 		//std::cerr<<"Increase flights in "<<INC_PEN<<" to "<<max_flights<<std::endl;
 
 	 	acum_ = 0;

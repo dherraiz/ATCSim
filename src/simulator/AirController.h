@@ -26,6 +26,7 @@
 #define AIRCONTROLLER_H_
 
 #include "Singleton.h"
+#include "Flight.h"
 
 namespace atcsim{
 
@@ -35,6 +36,25 @@ public:
 	virtual ~AirController();
 
 	void doWork();
+	Route get_ruta_oct(int i, int j)
+	{
+		return rutas_octogonos_[i][j];
+	};
+	Route get_ruta_aprox(int i, int j)
+	{
+		return rutas_aprox_[i][j];
+	};
+
+
+private:
+
+	Route rutas_octogonas_ [7][8];
+
+
+
+	Route rutas_octogonos_[14][8];
+	Route rutas_aprox_ [14][8];
+
 };
 
 };  // namespace atcsim

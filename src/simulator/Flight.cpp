@@ -49,6 +49,9 @@ Flight::Flight(std::string _id, Position _pos, float _bearing, float _inclinatio
 	id = _id;
 	pos = _pos;
 	bearing = _bearing;
+	first_bearing=_bearing;;//DANI
+	std::cout <<"FIRST BEARING: "<<(first_bearing*180/pi)<<'\n';
+	init_bearing = _bearing;
 	inclination = _inclination;
 	//speed = _speed;
 	setSpeed(_speed);	// Through set in order to limit speeds
@@ -60,6 +63,8 @@ Flight::Flight(std::string _id, Position _pos, float _bearing, float _inclinatio
 	points = INIT_FLIGHT_POINTS;
 
 	w_speed = 0.0f;
+
+	fase_=1;
 }
 
 void
@@ -73,6 +78,13 @@ Flight::update(float delta_t)
 		float goal_bearing, diff_bearing, new_w;
 
 		CPpos = route.front().pos;
+
+		if(CPpos.get_z() <= MAINTAIN_ALT){ // Maintain altitude
+			float current_alt = (this->getPosition()).get_z();
+			CPpos.set_z(current_alt);
+			route.front().pos.set_z(current_alt);
+		}
+
 		pos.angles(CPpos, goal_bearing, inclination);
 
 		goal_bearing = normalizePi(goal_bearing + M_PI);
